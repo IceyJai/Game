@@ -1,0 +1,38 @@
+import toga
+from random import randint
+
+class GameWindow(toga.App):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.main_box = toga.Box()
+        self.score_label = toga.Label('Score: 0', style=Pack(padding=(0, 10)))
+        self.main_box.add(self.score_label)
+        self.create_object()
+        self.sound = None  # Add sound playback logic here
+        self.main_box.add(self.object)
+
+    def create_object(self):
+        self.object = toga.Label('Tap Me!')
+        self.object.style.padding = (randint(0, 300), randint(0, 300))
+
+    def on_tick(self, widget):
+        # Update object position and check for collisions
+        pass
+
+    def on_touch(self, widget):
+        # Handle touch events
+        pass
+
+    def startup(self):
+        self.main_box.style.update(width=300, height=300)
+        self.main_box.style.layout = 'vertical'
+        self.main_window = toga.MainWindow(title=self.name)
+        self.main_window.content = self.main_box
+        self.main_window.show()
+
+def main():
+    return GameWindow('Simple Game', 'org.example.simplegame')
+
+if __name__ == '__main__':
+    app = main()
+    app.main_loop()
